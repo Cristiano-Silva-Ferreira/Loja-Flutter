@@ -121,7 +121,7 @@ class SignUpScreen extends StatelessWidget {
                         }
 
                         // usermanager
-                        context.read<UserManeger>().signIn(
+                        context.read<UserManeger>().signUp(
                           user: user,
                           onSuccess: (){
                             debugPrint('Sucesso');

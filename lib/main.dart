@@ -1,3 +1,4 @@
+import 'package:lojavirtual/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/user_manager.dart';

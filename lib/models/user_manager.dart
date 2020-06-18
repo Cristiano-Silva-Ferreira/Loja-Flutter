@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:lojavirtual/helpers/firebase_errors.dart';
 import 'package:lojavirtual/models/user.dart';
+//import 'dart:html';
 
 class UserManeger extends ChangeNotifier{
 
@@ -12,9 +14,10 @@ class UserManeger extends ChangeNotifier{
   }
 
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final Firestore firestore = Firestore.instance;
 
   // Salvando o usuário atual
-  FirebaseUser user;
+  User user;
 
   bool _loading = false;
   bool get loading => _loading;
@@ -26,10 +29,10 @@ class UserManeger extends ChangeNotifier{
 
     try {
       final AuthResult result = await auth.signInWithEmailAndPassword(
-          email: user.email.trim(), password: user.password);
+          email: user.email, password: user.password);
 
       // Salvando o usuário atual
-      this.user = result.user;
+      await _loadCurrentUser(firebaseUser: result.user);
 
       onSuccess();
     } on PlatformException catch (e) {
@@ -44,9 +47,13 @@ class UserManeger extends ChangeNotifier{
     loading = true;
     try {
       final AuthResult result = await auth.createUserWithEmailAndPassword(
-          email: user.email.trim(), password: user.password);
+          email: user.email, password: user.password);
 
-      this.user = result.user;
+      // Salvando o ID do usuário
+      user.id = result.user.uid;
+      this.user = user;
+
+      await user.saveData();
 
       onSuccess();
     } on PlatformException catch (e) {
@@ -60,14 +67,19 @@ class UserManeger extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> _loadCurrentUser() async {
+  Future<void> _loadCurrentUser({FirebaseUser firebaseUser}) async {
     // Retornando o usuário que estar logado
-    final FirebaseUser currentUser = await auth.currentUser();
+    final FirebaseUser currentUser = firebaseUser ?? await auth.currentUser();
     // Verificando o usuario atual
     if(currentUser != null){
-      user = currentUser;
+      // Buscando os dados do usuário
+      final DocumentSnapshot docUser = await firestore.collection('users')
+          .document(currentUser.uid).get();
+      user = User.fromDocument(docUser);
+
+      notifyListeners();
     }
-    notifyListeners();
+
   }
 
 }
