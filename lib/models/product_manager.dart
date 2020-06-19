@@ -13,7 +13,35 @@ class ProductManager extends ChangeNotifier{
   // Instanciando o FireStore
   final Firestore firestore =  Firestore.instance;
 
-  List<Product> _allProducts = [];
+  List<Product> allProducts = [];
+
+  String _search;
+  String get search => _search;
+
+  set search(String value){
+    _search = value;
+    notifyListeners();
+  }
+
+  // Veridicando se estar pesquisando ou não
+  List<Product> get filteredProducts {
+    final List<Product> filteredProducts = [];
+
+    // Aplicando os filtros na lista de pesquisa
+    // Verificando se a lista esta vázia
+    if(search.isEmpty){
+      filteredProducts.addAll(allProducts);
+    } else {
+    // Caso contrário adicionando os produtos cujo título contenha a pesquisa
+      filteredProducts.addAll(
+        allProducts.where(
+          (p) => p.name.toLowerCase().contains(search.toLowerCase())
+        )
+      );
+    }
+
+    return filteredProducts;
+  }
 
   // Declando o produto
   Future<void> _loadAllProducts() async{
@@ -22,7 +50,7 @@ class ProductManager extends ChangeNotifier{
         .getDocuments();
 
     // Acessando os produtos
-    _allProducts = snapProducts.documents.map(
+    allProducts = snapProducts.documents.map(
             (d) => Product.fromDocument(d)).toList();
 
     notifyListeners();
