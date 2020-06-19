@@ -22,6 +22,9 @@ class UserManeger extends ChangeNotifier{
   bool _loading = false;
   bool get loading => _loading;
 
+  // Verificando se o usuário estar logado
+  bool get isLoggedIn => user != null;
+
   Future<void> signIn({User user, Function onFail, Function onSuccess}) async {
 
     // Informando que estar carregando a informação
@@ -60,6 +63,12 @@ class UserManeger extends ChangeNotifier{
       onFail(getErrorString(e.code));
     }
     loading = false;
+  }
+
+  void signOut(){
+    auth.signOut();
+    user = null;
+    notifyListeners();
   }
 
   set loading(bool value){

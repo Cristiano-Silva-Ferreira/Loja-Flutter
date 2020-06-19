@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/helpers/validator.dart';
@@ -101,10 +100,9 @@ class LoginScreen extends StatelessWidget {
                                   );
                                 },
                                 onSuccess: (){
-                                  // TODO: Fechar o login
+                                  Navigator.of(context).pop();
                                 }
                             );
-
                           }
                         },
                         color: Theme.of(context).primaryColor,
@@ -142,7 +140,6 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
       ),
-
     );
   }
 }

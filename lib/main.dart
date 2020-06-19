@@ -1,8 +1,8 @@
-import 'package:lojavirtual/main.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:lojavirtual/models/product_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/base/base_screen.dart';
+import 'package:lojavirtual/screens/login/login_screen.dart';
 import 'package:lojavirtual/screens/signup/signup_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -15,8 +15,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => UserManeger(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserManeger(),
+          lazy: false,
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ProductManager(),
+          lazy: false,
+        )
+      ],
       child: MaterialApp(
           title: 'Loja do Cristiano',
           // Retirando o icone do debug
@@ -37,6 +46,10 @@ class MyApp extends StatelessWidget {
       initialRoute: '/base',
       onGenerateRoute: (setting){
         switch(setting.name){
+          case '/login' :
+            return MaterialPageRoute(
+                builder: (_) => LoginScreen()
+            );
             case '/signup' :
             return MaterialPageRoute(
               builder: (_) => SignUpScreen()
