@@ -5,7 +5,7 @@ import 'package:lojavirtual/models/product.dart';
 class ProductListTile extends StatelessWidget {
 
   // Passando o produto por parâmetro
-  ProductListTile(this.product);
+  const ProductListTile(this.product);
 
   final Product product;
   @override

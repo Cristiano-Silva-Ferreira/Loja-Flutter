@@ -15,7 +15,8 @@ class ProductManager extends ChangeNotifier{
 
   List<Product> allProducts = [];
 
-  String _search;
+  String _search = '';
+
   String get search => _search;
 
   set search(String value){
