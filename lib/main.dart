@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/base/base_screen.dart';
@@ -45,8 +46,8 @@ class MyApp extends StatelessWidget {
         ),
 
         initialRoute: '/base',
-        onGenerateRoute: (setting){
-          switch(setting.name){
+        onGenerateRoute: (settings){
+          switch(settings.name){
             case '/login' :
               return MaterialPageRoute(
                   builder: (_) => LoginScreen()
@@ -57,7 +58,9 @@ class MyApp extends StatelessWidget {
               );
               case '/product' :
               return MaterialPageRoute(
-                builder: (_) => ProductScreen()
+                builder: (_) => ProductScreen(
+                  settings.arguments as Product
+                )
               );
             case '/base':
             default:
