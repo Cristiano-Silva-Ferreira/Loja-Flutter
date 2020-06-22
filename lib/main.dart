@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lojavirtual/models/cart_manage.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/base/base_screen.dart';
+import 'package:lojavirtual/screens/cart/cart_sreen.dart';
 import 'package:lojavirtual/screens/login/login_screen.dart';
 import 'package:lojavirtual/screens/product/product_screen.dart';
 import 'package:lojavirtual/screens/signup/signup_screen.dart';
@@ -26,7 +28,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => ProductManager(),
           lazy: false,
-        )
+        ),
+        Provider(
+          create: (_) => CartManager(),
+          lazy: false,
+        ),
       ],
       child: MaterialApp(
           title: 'Loja do Cristiano',
@@ -61,6 +67,10 @@ class MyApp extends StatelessWidget {
                 builder: (_) => ProductScreen(
                   settings.arguments as Product
                 )
+              );
+            case '/cart' :
+              return MaterialPageRoute(
+                  builder: (_) => CartScreen()
               );
             case '/base':
             default:
