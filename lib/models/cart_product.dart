@@ -20,11 +20,11 @@ class CartProduct {
   ItemSize get itemSize {
     // Verificando se o produto é nulo
     if(product == null) return null;
-    product.findSize(size);
+    return product.findSize(size);
   }
 
   num get unitPrice {
     if(product == null) return 0;
-    return itemSize.price ?? 0;
+    return itemSize?.price ?? 0;
   }
 }
