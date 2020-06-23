@@ -27,14 +27,23 @@ class CartManager {
     final QuerySnapshot cartSnap = await user.cartReference.getDocuments();
 
     // Pegando os documentos
-    items = cartSnap.documents.map((d) => CartProduct.fromDocument(d)
-    ).toString();
+    items = cartSnap.documents.map((d) => CartProduct.fromDocument(d)).toList();
   }
 
   // Adicionando produto ao carrinho
-  void addToCart(Product product){
-    // Transformando o produto em produto que pode adicionar ao carrinho
-    items.add(CartProduct.fromProduct(product));
+  void addToCart(Product product) {
+    try {
+      // Procurando itens que podem empilhar (sendo iguais e com mesmo tamanho)
+      final e = items.firstWhere((p) => p.stackable(product));
+      e.quantity++;
+    } catch (e) {
+      final cartProduct = CartProduct.fromProduct(product);
+      // Transformando o produto em produto que pode adicionar ao carrinho
+      items.add(cartProduct);
+
+      // Salvando o carrinho
+      user.cartReference.add(cartProduct.toCartItemMap());
+    }
   }
 
 }

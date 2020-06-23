@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lojavirtual/common/custom_drawer/custom_icon_button.dart';
 import 'package:lojavirtual/models/cart_product.dart';
 
 class CartTile extends StatelessWidget {
@@ -27,13 +28,12 @@ class CartTile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 16),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       cartProduct.product.name,
                       style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17.0
-                      ),
+                          fontWeight: FontWeight.w500, fontSize: 17.0),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -45,7 +45,9 @@ class CartTile extends StatelessWidget {
                     Text(
                       'R\$ ${cartProduct.unitPrice.toStringAsFixed(2)}',
                       style: TextStyle(
-                        color: Theme.of(context).primaryColor,
+                        color: Theme
+                            .of(context)
+                            .primaryColor,
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
                       ),
@@ -53,6 +55,28 @@ class CartTile extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            Column(
+              children: <Widget>[
+                CustomIconButton(
+                  iconData: Icons.add,
+                  color: Theme
+                      .of(context)
+                      .primaryColor,
+                  onTap: cartProduct.increment,
+                ),
+                Text(
+                  '${cartProduct.quantity}',
+                  style: const TextStyle(fontSize: 20),
+                ),
+                CustomIconButton(
+                  iconData: Icons.remove,
+                  color: Theme
+                      .of(context)
+                      .primaryColor,
+                  onTap: cartProduct.decrement,
+                ),
+              ],
             )
           ],
         ),
