@@ -10,6 +10,7 @@ class CartManager extends ChangeNotifier {
 
   // Salvando o usuário logado
   User user;
+  num productsPrice = 0.0;
 
   // Atualizando o usuário logado
   void updateUser(UserManeger userManeger) {
@@ -17,7 +18,7 @@ class CartManager extends ChangeNotifier {
     items.clear();
 
     // Verificando se o usuário é diferente de nulo
-    if(user != null){
+    if (user != null) {
       _loadCartItems();
     }
   }
@@ -48,8 +49,10 @@ class CartManager extends ChangeNotifier {
       items.add(cartProduct);
 
       // Salvando o carrinho
-      user.cartReference.add(cartProduct.toCartItemMap())
+      user.cartReference
+          .add(cartProduct.toCartItemMap())
           .then((doc) => cartProduct.id = doc.documentID);
+      _onItemUpdated();
     }
     notifyListeners();
   }
@@ -65,19 +68,41 @@ class CartManager extends ChangeNotifier {
 
   // Atualizando a quantidade dos itens no FireBase
   void _onItemUpdated() {
+    productsPrice = 0.0;
+
     // Acessando cada um dos itens no carrinho
-    for (final cartProduct in items) {
+    for (int i = 0; i < items.length; i++) {
+      final cartProduct = items[i];
+
       // Verificando se o item é igual a zero
       if (cartProduct.quantity == 0) {
         removeOfCart(cartProduct);
+        i--;
+        continue;
       }
+
+      productsPrice += cartProduct.totalPrice;
+
       _updateCartProduct(cartProduct);
+    }
+
+    notifyListeners();
+  }
+
+  // Função para atualizar o carrinho
+  void _updateCartProduct(CartProduct cartProduct) {
+    if (cartProduct.id != null) {
+      user.cartReference.document(cartProduct.id)
+          .updateData(cartProduct.toCartItemMap());
     }
   }
 
-  void _updateCartProduct(CartProduct cartProduct) {
-    user.cartReference.document(cartProduct.id)
-        .updateData(cartProduct.toCartItemMap());
+  // Verificando se em todos os carrinho tem estoque o suficiente
+  bool get isCartValid {
+    for (final cartProduct in items) {
+      if (!cartProduct.hasStock) return false;
+    }
+    return true;
   }
 
 }

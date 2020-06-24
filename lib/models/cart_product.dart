@@ -18,10 +18,10 @@ class CartProduct extends ChangeNotifier {
     size = document.data['size'] as String;
 
     // Pegando os dados do produto
-    firestore
-        .document('products/$productId')
-        .get()
-        .then((doc) => product = Product.fromDocument(doc));
+    firestore.document('products/$productId').get().then((doc) {
+      product = Product.fromDocument(doc);
+      notifyListeners();
+    });
   }
 
   // Acessando o FireStore
@@ -41,10 +41,14 @@ class CartProduct extends ChangeNotifier {
     return product.findSize(size);
   }
 
+  // Preço unitário
   num get unitPrice {
     if (product == null) return 0;
     return itemSize?.price ?? 0;
   }
+
+  // Preço total
+  num get totalPrice => unitPrice * quantity;
 
   Map<String, dynamic> toCartItemMap() {
     return {
@@ -69,4 +73,14 @@ class CartProduct extends ChangeNotifier {
     quantity--;
     notifyListeners();
   }
+
+  // Função para limitar a incrementação além do disponivel
+  bool get hasStock {
+    // Buscando o tamanho do item selecionado
+    final size = itemSize;
+    // Verificando se não encontrou o item
+    if (size == null) return false;
+    return size.stock >= quantity;
+  }
+
 }
