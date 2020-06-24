@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:lojavirtual/models/item_size.dart';
 import 'package:lojavirtual/models/product.dart';
 
-class CartProduct {
-
+class CartProduct extends ChangeNotifier {
   CartProduct.fromProduct(this.product) {
     productId = product.id;
     quantity = 1;
@@ -12,6 +12,7 @@ class CartProduct {
 
   // Buscando os dados do FireBase
   CartProduct.fromDocument(DocumentSnapshot document) {
+    id = document.documentID;
     productId = document.data['pid'] as String;
     quantity = document.data['quantity'] as int;
     size = document.data['size'] as String;
@@ -27,6 +28,7 @@ class CartProduct {
   final Firestore firestore = Firestore.instance;
 
   // Armazendo os campos que ira salvar no FireBase
+  String id;
   String productId;
   int quantity;
   String size;
@@ -59,10 +61,12 @@ class CartProduct {
   // Função para incrementar
   void increment() {
     quantity++;
+    notifyListeners();
   }
 
   // Função para decrementar
   void decrement() {
     quantity--;
+    notifyListeners();
   }
 }
