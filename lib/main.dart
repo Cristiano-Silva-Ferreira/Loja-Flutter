@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/cart_manage.dart';
+import 'package:lojavirtual/models/home_manager.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
@@ -19,16 +20,27 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Tela USUÁRIO
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (_) => UserManeger(),
           lazy: false,
         ),
+
+        // Tela de PRODUTOS
         ChangeNotifierProvider(
           create: (_) => ProductManager(),
           lazy: false,
         ),
+
+        // Tela HOME
+        ChangeNotifierProvider(
+          create: (_) => HomeManager(),
+          lazy: false,
+        ),
+
+        // Tela do CARRINHO
         ChangeNotifierProxyProvider<UserManeger, CartManager>(
           create: (_) => CartManager(),
           lazy: false,
