@@ -17,13 +17,14 @@ class User {
 
   String confirmPassword;
 
+  bool admin = false;
+
   // Referenciando os dodos
   DocumentReference get firestoreRef =>
-    Firestore.instance.document('users/$id');
+      Firestore.instance.document('users/$id');
 
   // Referenciando a coleção do usuário
-  CollectionReference get cartReference =>
-    firestoreRef.collection('cart');
+  CollectionReference get cartReference => firestoreRef.collection('cart');
 
   // Salvando os dados do usuário
   Future<void> saveData() async{
