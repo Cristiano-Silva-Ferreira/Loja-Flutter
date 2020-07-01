@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lojavirtual/models/section.dart';
-import 'package:lojavirtual/screens/home/components/item.tile.dart';
+import 'package:lojavirtual/screens/home/components/item_tile.dart';
 import 'package:lojavirtual/screens/home/components/section_header.dart';
 
 class SectionStaggered extends StatelessWidget {

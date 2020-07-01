@@ -1,11 +1,11 @@
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lojavirtual/models/cart_manage.dart';
+import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/user_manager.dart';
+import 'package:lojavirtual/screens/product/components/size_widget.dart';
 import 'package:provider/provider.dart';
-import 'componets/size_widget.dart';
 
 class ProductScreen extends StatelessWidget {
 

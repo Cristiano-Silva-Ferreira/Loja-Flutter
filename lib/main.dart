@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lojavirtual/models/cart_manage.dart';
+import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/home_manager.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';

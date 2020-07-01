@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lojavirtual/models/cart_manage.dart';
+import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:provider/provider.dart';
 
 class PriceCard extends StatelessWidget {
