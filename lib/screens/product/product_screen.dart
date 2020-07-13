@@ -33,8 +33,9 @@ class ProductScreen extends StatelessWidget {
                   return IconButton(
                     icon: Icon(Icons.edit),
                     onPressed: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed('/edit_product');
+                      Navigator.of(context).pushReplacementNamed(
+                          '/edit_product',
+                          arguments: product);
                     },
                   );
                 } else {
@@ -85,11 +86,11 @@ class ProductScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'R\$ 19.99',
+                    'R\$ ${product.basePrice.toStringAsFixed(2)}',
                     style: TextStyle(
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.bold,
-                      color: primaryColor
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                        color: primaryColor
                     ),
                   ),
                   Padding(

@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/common/custom_drawer/custom_drawer.dart';
 import 'package:lojavirtual/models/product_manager.dart';
+import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/products/components/product_list_tile.dart';
 import 'package:provider/provider.dart';
-
 import 'components/search_dialog.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -45,7 +45,6 @@ class ProductsScreen extends StatelessWidget {
           },
         ),
         centerTitle: true,
-
         // Adicionando os botões de pesquisa e adicionar produto Criando uma pesquisa local
         actions: <Widget>[
             // Botão de pesquisa
@@ -67,16 +66,34 @@ class ProductsScreen extends StatelessWidget {
                         productManager.search = search;
                       }
                     },
-                  );
-                } else {
-                  return IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: () async {
-                      productManager.search = '';
-                    },
-                  );
-                }
-              },
+                );
+              } else {
+                return IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () async {
+                    productManager.search = '';
+                  },
+                );
+              }
+            },
+          ),
+
+          // Botão de adicionar
+          Consumer<UserManeger>(
+            builder: (_, userManager, __) {
+              if (userManager.adminEnabled) {
+                return IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      '/edit_product',
+                    );
+                  },
+                );
+              } else {
+                return Container();
+              }
+            },
           )
         ],
 

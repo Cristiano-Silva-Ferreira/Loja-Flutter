@@ -4,7 +4,6 @@ import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/home_manager.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';
-import 'package:lojavirtual/models/user.dart';
 import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/base/base_screen.dart';
 import 'package:lojavirtual/screens/cart/cart_sreen.dart';
@@ -104,8 +103,8 @@ class MyApp extends StatelessWidget {
 
             case '/edit_product' :
               return MaterialPageRoute(
-                  builder: (_) => EditProductScreen()
-              );
+                  builder: (_) =>
+                      EditProductScreen(settings.arguments as Product));
 
             case '/base':
             default:
