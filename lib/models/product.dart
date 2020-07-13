@@ -33,10 +33,10 @@ class Product extends ChangeNotifier{
   // Verificando a quantidade total do estoque
   int get totalStock {
    int stock = 0;
-   for(final size in sizes){
-     stock += size.stock;
-   }
-   return stock;
+    for (final size in sizes) {
+      stock += size.stock;
+    }
+    return stock;
   }
 
   // Verificando se tem item no estoque
@@ -44,6 +44,16 @@ class Product extends ChangeNotifier{
     return totalStock > 0;
   }
 
+  // Configurando a base do preço e achando o menor preço
+  num get basePrice {
+    num lowest = double.infinity;
+    for (final size in sizes) {
+      if (size.price < lowest && size.hasStock) {
+        lowest = size.price;
+      }
+    }
+    return lowest;
+  }
 
   ItemSize findSize(String name) {
     try {
