@@ -66,7 +66,7 @@ class ProductManager extends ChangeNotifier{
   }
 
   void updade(Product product) {
-    // Removendo o produto antigo da lista
+    // Removendo um da produto antigo da lista
     allProducts.retainWhere((p) => p.id == product.id);
     // Adiciona o novo produto
     allProducts.add(product);
