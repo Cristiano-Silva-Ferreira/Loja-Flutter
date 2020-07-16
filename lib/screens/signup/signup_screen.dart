@@ -115,44 +115,42 @@ class SignUpScreen extends StatelessWidget {
                             // Se estiver tudo certo chamar o método onSave de cada um dos forms
                             formKey.currentState.save();
 
-                            // Verificando se as senhas são iguais
-                            if(user.password != user.confirmPassword){
-                              scaffoldKey.currentState.showSnackBar(
-                                  SnackBar(
-                                    content: const Text('Senhas não coincidem!'),
-                                    backgroundColor: Colors.red,
-                                  )
-                              );
-                              return;
-                            }
+                                  // Verificando se as senhas são iguais
+                                  if (user.password != user.confirmPassword) {
+                                    scaffoldKey.currentState
+                                        .showSnackBar(SnackBar(
+                                      content:
+                                          const Text('Senhas não coincidem!'),
+                                      backgroundColor: Colors.red,
+                                    ));
+                                    return;
+                                  }
 
-                            // usermanager
-                            userManager.signUp(
-                                user: user,
-                                onSuccess: (){
-                                  Navigator.of(context).pop();
-                                },
-                                onFail: (e){
-                                  scaffoldKey.currentState.showSnackBar(
-                                      SnackBar(
-                                        content: Text('Falhar ao cadastrar: $e'),
-                                        backgroundColor: Colors.red,
-                                      )
-                                  );
+                                  // usermanager
+                                  userManager.signUp(
+                                      user: user,
+                                      onSuccess: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      onFail: (e) {
+                                        scaffoldKey.currentState
+                                            .showSnackBar(SnackBar(
+                                          content:
+                                              Text('Falhar ao cadastrar: $e'),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      });
                                 }
-                            );
-                          }
-                        },
-                        child: userManager.loading ?
-                        CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation(Colors.white),
-                        )
-                        : const Text(
-                          'Criar Conta',
-                          style: TextStyle(
-                              fontSize: 18
-                          ),
-                        ),
+                              },
+                        child: userManager.loading
+                            ? CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation(Colors.white),
+                              )
+                            : const Text(
+                                'Criar Conta',
+                                style: TextStyle(fontSize: 18),
+                              ),
                       ),
                     )
                   ],
