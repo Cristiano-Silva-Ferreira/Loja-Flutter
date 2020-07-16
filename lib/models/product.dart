@@ -133,7 +133,7 @@ class Product extends ChangeNotifier {
         final StorageTaskSnapshot snapshot = await task.onComplete;
         // Obtendo a URL da imagem
         final String url = await snapshot.ref.getDownloadURL() as String;
-        // Adicionando a URL da imagem
+        // Adicionando a URL da imagem no firebase
         updateImages.add(url);
       }
     }
