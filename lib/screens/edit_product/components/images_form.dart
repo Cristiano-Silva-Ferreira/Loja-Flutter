@@ -6,6 +6,7 @@ import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/screens/edit_product/components/image_source_sheet.dart';
 
 class ImagesForm extends StatelessWidget {
+
   const ImagesForm(this.product);
 
   final Product product;
@@ -21,7 +22,9 @@ class ImagesForm extends StatelessWidget {
         }
         return null;
       },
-      onSaved: (image) => product.newImages = image,
+      onSaved: (image),
+
+      product.newImages = image,
       builder: (state) {
         // Obtendo o arquivo
         void onImageSelected(File file) {
