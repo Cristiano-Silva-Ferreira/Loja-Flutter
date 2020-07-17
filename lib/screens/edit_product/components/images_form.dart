@@ -15,6 +15,7 @@ class ImagesForm extends StatelessWidget {
     return FormField<List<dynamic>>(
       // Especificando o dado inicial do campo
       initialValue: List.from(product.images),
+<<<<<<< HEAD
       validator: (images) {
         if (images.isEmpty) {
           return 'Insira ao menos uma imagem';
@@ -23,6 +24,14 @@ class ImagesForm extends StatelessWidget {
       },
       onSaved: (images) => product.newImages = images,
 
+=======
+      validator: (image) {
+        if (image.isEmpty) {
+          return 'Inisira ao menos uma imagem';
+        }
+        return null;
+      },
+>>>>>>> 42d08476610be43c7ca7a11b91a20ad5d2642c6f
       builder: (state) {
         // Obtendo o arquivo
         void onImageSelected(File file) {
@@ -47,10 +56,14 @@ class ImagesForm extends StatelessWidget {
                           fit: BoxFit.cover,
                         )
                       else
+<<<<<<< HEAD
                         Image.file(
                           image as File,
                           fit: BoxFit.cover,
                         ),
+=======
+                        Image.file(image as File, fit: BoxFit.cover),
+>>>>>>> 42d08476610be43c7ca7a11b91a20ad5d2642c6f
                       Align(
                         alignment: Alignment.topRight,
                         child: IconButton(
@@ -108,10 +121,14 @@ class ImagesForm extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   state.errorText,
+<<<<<<< HEAD
                   style: const TextStyle(
                     color: Colors.red,
                     fontSize: 12,
                   ),
+=======
+                  style: const TextStyle(color: Colors.red, fontSize: 12),
+>>>>>>> 42d08476610be43c7ca7a11b91a20ad5d2642c6f
                 ),
               )
           ],
