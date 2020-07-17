@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,8 +15,10 @@ class Product extends ChangeNotifier {
     id = document.documentID;
     name = document['name'] as String;
     description = document['description'] as String;
+
     // Transformando uma lista dinâmica em lista de string
     images = List<String>.from(document.data['images'] as List<dynamic>);
+
     // Pegando o tamanho das camisetas
     sizes = (document.data['sizes'] as List<dynamic> ?? [])
         .map((s) => ItemSize.fromMap(s as Map<String, dynamic>))
@@ -42,9 +43,7 @@ class Product extends ChangeNotifier {
   List<dynamic> newImages;
 
   bool _loading = false;
-
   bool get loading => _loading;
-
   set loading(bool value) {
     _loading = value;
     notifyListeners();

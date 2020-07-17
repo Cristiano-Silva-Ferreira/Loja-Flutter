@@ -50,17 +50,20 @@ class ProductsScreen extends StatelessWidget {
             // Botão de pesquisa
           Consumer<ProductManager>(
               builder: (_, productManager, __){
-                // Verificando se estar fazendo pesquisa
-                if(productManager.search.isEmpty){
+              // Verificando se estar fazendo pesquisa
+                if(productManager.search.isEmpty) {
+                  // Botão para pesquisa
                   return IconButton(
                     icon: Icon(Icons.search),
                     onPressed: () async {
                       // Exibindo o campo de pesquisa
                       final search = await showDialog<String>(
                           context: context,
-                          builder: (_) => SearchDialog(
-                            productManager.search
-                          ));
+                          builder: (_) =>
+                              SearchDialog(
+                                  productManager.search
+                              ));
+
                       // Verificando se a pesquisa é diferente de nulo
                       if(search != null){
                         productManager.search = search;

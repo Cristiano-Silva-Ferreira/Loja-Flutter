@@ -2,16 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lojavirtual/models/product.dart';
 
-class ProductManager extends ChangeNotifier{
-
+class ProductManager extends ChangeNotifier {
   // Construtor
-  ProductManager(){
+  ProductManager() {
     _loadAllProducts();
-
   }
 
   // Instanciando o FireStore
-  final Firestore firestore =  Firestore.instance;
+  final Firestore firestore = Firestore.instance;
 
   List<Product> allProducts = [];
 
@@ -19,7 +17,7 @@ class ProductManager extends ChangeNotifier{
 
   String get search => _search;
 
-  set search(String value){
+  set search(String value) {
     _search = value;
     notifyListeners();
   }
@@ -30,22 +28,19 @@ class ProductManager extends ChangeNotifier{
 
     // Aplicando os filtros na lista de pesquisa
     // Verificando se a lista esta vázia
-    if(search.isEmpty){
+    if (search.isEmpty) {
       filteredProducts.addAll(allProducts);
     } else {
-    // Caso contrário adicionando os produtos cujo título contenha a pesquisa
-      filteredProducts.addAll(
-        allProducts.where(
-          (p) => p.name.toLowerCase().contains(search.toLowerCase())
-        )
-      );
+      // Caso contrário adicionando os produtos cujo título contenha a pesquisa
+      filteredProducts.addAll(allProducts
+          .where((p) => p.name.toLowerCase().contains(search.toLowerCase())));
     }
 
     return filteredProducts;
   }
 
   // Declando o produto
-  Future<void> _loadAllProducts() async{
+  Future<void> _loadAllProducts() async {
     // Acessando o FireStore
     final QuerySnapshot snapProducts =
         await firestore.collection('products').getDocuments();
@@ -67,8 +62,18 @@ class ProductManager extends ChangeNotifier{
 
   void updade(Product product) {
     // Removendo um da produto antigo da lista
-    allProducts.retainWhere((p) => p.id == product.id);
+    //allProducts.retainWhere((p) => p.id == product.id);
+    final List<Product> newProducts = [];
+
+    for (final currentProduct in allProducts) {
+      if (currentProduct.id != product.id) {
+        newProducts.add(currentProduct);
+      }
+    }
+    // Limpando a lista de produtos
+    allProducts.clear();
     // Adiciona o novo produto
+    allProducts.addAll(newProducts);
     allProducts.add(product);
     notifyListeners();
   }

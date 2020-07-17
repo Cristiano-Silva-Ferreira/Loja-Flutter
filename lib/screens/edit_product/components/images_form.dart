@@ -6,7 +6,6 @@ import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/screens/edit_product/components/image_source_sheet.dart';
 
 class ImagesForm extends StatelessWidget {
-
   const ImagesForm(this.product);
 
   final Product product;
@@ -16,15 +15,14 @@ class ImagesForm extends StatelessWidget {
     return FormField<List<dynamic>>(
       // Especificando o dado inicial do campo
       initialValue: List.from(product.images),
-      validator: (image) {
-        if (image.isEmpty) {
-          return 'Inisira ao menos uma imagem';
+      validator: (images) {
+        if (images.isEmpty) {
+          return 'Insira ao menos uma imagem';
         }
         return null;
       },
-      onSaved: (image),
+      onSaved: (images) => product.newImages = images,
 
-      product.newImages = image,
       builder: (state) {
         // Obtendo o arquivo
         void onImageSelected(File file) {
@@ -49,7 +47,10 @@ class ImagesForm extends StatelessWidget {
                           fit: BoxFit.cover,
                         )
                       else
-                        Image.file(image as File, fit: BoxFit.cover),
+                        Image.file(
+                          image as File,
+                          fit: BoxFit.cover,
+                        ),
                       Align(
                         alignment: Alignment.topRight,
                         child: IconButton(
@@ -107,7 +108,10 @@ class ImagesForm extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   state.errorText,
-                  style: const TextStyle(color: Colors.red, fontSize: 12),
+                  style: const TextStyle(
+                    color: Colors.red,
+                    fontSize: 12,
+                  ),
                 ),
               )
           ],
