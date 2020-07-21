@@ -5,7 +5,7 @@ import 'package:lojavirtual/models/cart_product.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/user.dart';
 import 'package:lojavirtual/models/user_manager.dart';
-import 'package:lojavirtual/services/cepAberto_services.dart';
+import 'package:lojavirtual/services/cepaberto_services.dart';
 
 class CartManager extends ChangeNotifier {
   List<CartProduct> items = [];
