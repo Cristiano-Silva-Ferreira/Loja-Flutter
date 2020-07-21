@@ -5,17 +5,19 @@ import 'package:lojavirtual/models/home_manager.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
+import 'package:lojavirtual/screens/address/address_screen.dart';
 import 'package:lojavirtual/screens/base/base_screen.dart';
 import 'package:lojavirtual/screens/cart/cart_sreen.dart';
 import 'package:lojavirtual/screens/edit_product/edit_prodcut_screen.dart';
 import 'package:lojavirtual/screens/login/login_screen.dart';
 import 'package:lojavirtual/screens/product/product_screen.dart';
+import 'package:lojavirtual/screens/select_product/select_product_screen.dart';
 import 'package:lojavirtual/screens/signup/signup_screen.dart';
+import 'package:lojavirtual/services/cepAberto_services.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
     runApp(MyApp());
-
 }
 
 class MyApp extends StatelessWidget {
@@ -90,27 +92,25 @@ class MyApp extends StatelessWidget {
 
             case '/product' :
               return MaterialPageRoute(
-                  builder: (_) =>
-                      ProductScreen(
-                          settings.arguments as Product
-                      )
-              );
+                  builder: (_) => ProductScreen(settings.arguments as Product));
 
-            case '/cart' :
-              return MaterialPageRoute(
-                  builder: (_) => CartScreen()
-              );
+            case '/cart':
+              return MaterialPageRoute(builder: (_) => CartScreen());
 
-            case '/edit_product' :
+            case '/address':
+              return MaterialPageRoute(builder: (_) => AddressScreen());
+
+            case '/edit_product':
               return MaterialPageRoute(
                   builder: (_) =>
                       EditProductScreen(settings.arguments as Product));
 
+            case '/select_product':
+              return MaterialPageRoute(builder: (_) => SelectProdutScreen());
+
             case '/base':
             default:
-              return MaterialPageRoute(
-                  builder: (_) => BaseScreen()
-              );
+              return MaterialPageRoute(builder: (_) => BaseScreen());
           }
         },
       ),

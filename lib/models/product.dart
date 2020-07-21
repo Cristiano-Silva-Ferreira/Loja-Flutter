@@ -60,11 +60,7 @@ class Product extends ChangeNotifier {
 
   // Verificando a quantidade total do estoque
   int get totalStock {
-<<<<<<< HEAD
     int stock = 0;
-=======
-   int stock = 0;
->>>>>>> 42d08476610be43c7ca7a11b91a20ad5d2642c6f
     for (final size in sizes) {
       stock += size.stock;
     }

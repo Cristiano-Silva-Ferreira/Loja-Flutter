@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/product.dart';
-<<<<<<< HEAD
 import 'package:lojavirtual/models/product_manager.dart';
 import 'package:lojavirtual/screens/edit_product/components/images_form.dart';
 import 'package:lojavirtual/screens/edit_product/components/sizes_form.dart';
@@ -13,14 +12,7 @@ class EditProductScreen extends StatelessWidget {
 
   final Product product;
   final bool editing;
-=======
-import 'package:lojavirtual/screens/edit_product/components/images_form.dart';
 
-class EditProductScreen extends StatelessWidget {
-  EditProductScreen(this.product);
-
-  final Product product;
->>>>>>> 42d08476610be43c7ca7a11b91a20ad5d2642c6f
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -28,7 +20,6 @@ class EditProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
 
-<<<<<<< HEAD
     return ChangeNotifierProvider.value(
       value: product,
       child: Scaffold(
@@ -56,8 +47,10 @@ class EditProductScreen extends StatelessWidget {
                         hintText: 'Título',
                         border: InputBorder.none,
                       ),
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600
+                      ),
                       validator: (name) {
                         if (name.length < 6) {
                           return 'Título muito curto';
@@ -94,8 +87,8 @@ class EditProductScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 16),
                       child: Text(
                         'Descrição',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500),
+                        style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                       ),
                     ),
 
@@ -129,32 +122,31 @@ class EditProductScreen extends StatelessWidget {
                           child: RaisedButton(
                             onPressed: !product.loading
                                 ? () async {
-                                    if (formKey.currentState.validate()) {
-                                      formKey.currentState.save();
+                              if (formKey.currentState.validate()) {
+                                formKey.currentState.save();
 
-                                      await product.save();
+                                await product.save();
 
-                                      // Informando para o o ProductManger que houver alterações
-                                      context
-                                          .read<ProductManager>()
-                                          .updade(product);
+                                // Informando para o o ProductManger que houver alterações
+                                context
+                                    .read<ProductManager>()
+                                    .updade(product);
 
-                                      Navigator.of(context).pop();
-                                    }
-                                  }
+                                Navigator.of(context).pop();
+                              }
+                            }
                                 : null,
                             textColor: Colors.white,
                             color: primaryColor,
                             disabledColor: primaryColor.withAlpha(100),
                             child: product.loading
                                 ? CircularProgressIndicator(
-                                    valueColor:
-                                        AlwaysStoppedAnimation(Colors.white),
-                                  )
+                              valueColor: AlwaysStoppedAnimation(Colors.white),
+                            )
                                 : const Text(
-                                    'Salvar',
-                                    style: TextStyle(fontSize: 18.0),
-                                  ),
+                              'Salvar',
+                              style: TextStyle(fontSize: 18.0),
+                            ),
                           ),
                         );
                       },
@@ -164,101 +156,6 @@ class EditProductScreen extends StatelessWidget {
               )
             ],
           ),
-        ),
-=======
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Editar Anúncio'),
-        centerTitle: true,
->>>>>>> 42d08476610be43c7ca7a11b91a20ad5d2642c6f
-      ),
-      backgroundColor: Colors.white,
-      body: Form(
-        key: formKey,
-        child: ListView(
-          children: <Widget>[
-            ImagesForm(product),
-            // Editando o nome do produto
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  // Titulo do produto
-                  TextFormField(
-                    initialValue: product.name,
-                    decoration: const InputDecoration(
-                      hintText: 'Título',
-                      border: InputBorder.none,
-                    ),
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                    validator: (name) {
-                      if (name.length < 6) {
-                        return 'Titulo muito curto';
-                      }
-                      return null;
-                    },
-                  ),
-
-                  // Campo a partir de...
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text(
-                      'A partir de',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 13,
-                      ),
-                    ),
-                  ),
-
-                  // Campo preço
-                  Text(
-                    'R\$ ...',
-                    style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: primaryColor),
-                  ),
-
-                  // Campo descrição
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Text(
-                      'Descrição',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-
-                  // Campo da descrição do produto
-                  TextFormField(
-                    initialValue: product.description,
-                    style: const TextStyle(fontSize: 16),
-                    decoration: const InputDecoration(
-                        hintText: 'Descrição', border: InputBorder.none),
-                    maxLines: null,
-                    validator: (desc) {
-                      if (desc.length < 10) {
-                        return 'Descrição muito curta';
-                      }
-                      return null;
-                    },
-                  ),
-
-                  // Botão salvar
-                  RaisedButton(
-                    onPressed: () {
-                      if (formKey.currentState.validate()) {
-                        print('Válido!!!');
-                      }
-                    },
-                    child: const Text('Salvar'),
-                  ),
-                ],
-              ),
-            )
-          ],
         ),
       ),
     );

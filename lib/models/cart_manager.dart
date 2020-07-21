@@ -1,15 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:lojavirtual/models/address.dart';
 import 'package:lojavirtual/models/cart_product.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/user.dart';
 import 'package:lojavirtual/models/user_manager.dart';
+import 'package:lojavirtual/services/cepAberto_services.dart';
 
 class CartManager extends ChangeNotifier {
   List<CartProduct> items = [];
 
   // Salvando o usuário logado
   User user;
+
+  Address address;
+
   num productsPrice = 0.0;
 
   // Atualizando o usuário logado
@@ -105,4 +110,31 @@ class CartManager extends ChangeNotifier {
     return true;
   }
 
+  // ADDRESS
+  // Recebendo os dados do serviço de endereço
+  Future<void> getAddress(String cep) async {
+    final cepAbertoService = CepAbertoService();
+
+    // Obtendo o endereço atraves do serviço
+    try {
+      // Obtendo os dados do CepAberto
+      final cepAbertoAddress = await cepAbertoService.getAddressFromCep(cep);
+
+      // Transformando no ADDRESS do APP
+      // Verificando se é nulo
+      if (cepAbertoAddress != null) {
+        address = Address(
+            street: cepAbertoAddress.logradouro,
+            district: cepAbertoAddress.bairro,
+            zipCode: cepAbertoAddress.cep,
+            city: cepAbertoAddress.cidade.nome,
+            state: cepAbertoAddress.estado.sigla,
+            lat: cepAbertoAddress.latitude,
+            long: cepAbertoAddress.longitude);
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 }
