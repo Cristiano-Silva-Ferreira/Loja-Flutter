@@ -137,4 +137,10 @@ class CartManager extends ChangeNotifier {
       debugPrint(e.toString());
     }
   }
+
+  // Função para remover o CEP gravado
+  void removeAddress() {
+    address = null;
+    notifyListeners();
+  }
 }

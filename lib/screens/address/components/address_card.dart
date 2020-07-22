@@ -30,13 +30,10 @@ class AddressCard extends StatelessWidget {
                     ),
 
                     // Widget para p CEP
-                    CepInputField(),
+                    CepInputField(address),
 
-                    // Verificando se o CEP foi preenchido
-                    if (address.zipCode != null)
-
-                      // Widget do Endereço
-                      AddressInputField(address),
+                    // Widget do Endereço
+                    AddressInputField(address),
                   ],
                 ),
               );
