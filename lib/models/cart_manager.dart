@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:lojavirtual/models/address.dart';
 import 'package:lojavirtual/models/cart_product.dart';
 import 'package:lojavirtual/models/product.dart';
@@ -16,6 +17,9 @@ class CartManager extends ChangeNotifier {
   Address address;
 
   num productsPrice = 0.0;
+  num deliveryPrince;
+
+  final Firestore firestore = Firestore.instance;
 
   // Atualizando o usuário logado
   void updateUser(UserManeger userManeger) {
@@ -138,9 +142,54 @@ class CartManager extends ChangeNotifier {
     }
   }
 
+  // Função para set o endereço para calcular o frete
+  Future<void> setAddress(Address address) async {
+    // Salvando o endereço atualizado
+    this.address = address;
+
+    if (await calculateDelivery(address.lat, address.long)) {
+      print('price $deliveryPrince');
+    } else {
+      return Future.error('Endereço fora do raio de entrega :(');
+    }
+  }
+
   // Função para remover o CEP gravado
   void removeAddress() {
     address = null;
     notifyListeners();
+  }
+
+  // Função para calcular o valor do delivery
+  Future<bool> calculateDelivery(double lat, double long) async {
+    final DocumentSnapshot doc = await firestore.document('aux/delivery').get();
+
+    // Obtendo os dados de latitude e longitude
+    final latStore = doc.data['lat'] as double;
+    final longStore = doc.data['long'] as double;
+
+    // Obtendo os dados do delivery
+    final base = doc.data['base'] as num;
+    final km = doc.data['km'] as num;
+    final maxkm = doc.data['maxKm'] as num;
+
+    // Calculando a disntancia
+    double dis =
+        await Geolocator().distanceBetween(latStore, longStore, lat, long);
+
+    // Convertendeo a distancia de MT para KM
+    dis /= 1000.0;
+
+    // Verificando se a distancia esta no limite
+    debugPrint('Distancia $dis');
+
+    // Verificando a distancia
+    if (dis > maxkm) {
+      return false;
+    }
+
+    // Calculando o valor do frete
+    deliveryPrince = base + dis * km;
+    return true;
   }
 }
