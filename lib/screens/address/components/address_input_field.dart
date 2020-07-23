@@ -12,24 +12,25 @@ class AddressInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final cartManager = context.watch<CartManager>();
 
     // Validador dos compos do endereço
     String emptyValidator(String text) =>
         text.isEmpty ? 'Campo obrigatório' : null;
 
     // Verificando se o CEP foi preenchido
-    if (address.zipCode != null) {
+    if (address.zipCode != null && cartManager.deliveryPrince == null) {
       return GestureDetector(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              // Campo da Rua
-              TextFormField(
-                initialValue: address.street,
-                decoration: const InputDecoration(
-                  isDense: true,
-                  labelText: 'Rua/Avenida',
-                  hintText: 'Av.Brasil',
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          // Campo da Rua
+          TextFormField(
+            initialValue: address.street,
+            decoration: const InputDecoration(
+              isDense: true,
+              labelText: 'Rua/Avenida',
+              hintText: 'Av.Brasil',
                 ),
                 validator: emptyValidator,
                 onSaved: (t) => address.street = t,
@@ -158,6 +159,16 @@ class AddressInputField extends StatelessWidget {
               )
             ],
           )
+      );
+
+      // Widget da informação do endereço do delivery
+    } else if (address.zipCode != null) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 16),
+        child: Text(
+            '${address.street}, ${address.number}\n${address.district}\n'
+                '${address.city} - ${address.state}'
+        ),
       );
     } else {
       return Container();

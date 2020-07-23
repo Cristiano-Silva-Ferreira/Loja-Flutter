@@ -19,6 +19,9 @@ class CartManager extends ChangeNotifier {
   num productsPrice = 0.0;
   num deliveryPrince;
 
+  // Calculando o valor total da venda
+  num get totalPrice => productsPrice + (deliveryPrince ?? 0);
+
   final Firestore firestore = Firestore.instance;
 
   // Atualizando o usuário logado
@@ -106,13 +109,16 @@ class CartManager extends ChangeNotifier {
     }
   }
 
-  // Verificando se em todos os carrinho tem estoque o suficiente
+  // Função para Verificar se em todos os carrinho tem estoque o suficiente
   bool get isCartValid {
     for (final cartProduct in items) {
       if (!cartProduct.hasStock) return false;
     }
     return true;
   }
+
+  // Função para verificar se o endereço e o preço são diferente de nulo
+  bool get isAddressValid => address != null && deliveryPrince != null;
 
   // ADDRESS
   // Recebendo os dados do serviço de endereço
@@ -149,6 +155,7 @@ class CartManager extends ChangeNotifier {
 
     if (await calculateDelivery(address.lat, address.long)) {
       print('price $deliveryPrince');
+      notifyListeners();
     } else {
       return Future.error('Endereço fora do raio de entrega :(');
     }
@@ -157,6 +164,7 @@ class CartManager extends ChangeNotifier {
   // Função para remover o CEP gravado
   void removeAddress() {
     address = null;
+    deliveryPrince = null;
     notifyListeners();
   }
 
