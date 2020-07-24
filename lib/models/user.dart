@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'file:///E:/Documentos/Projetos/AndroidStudioProjects/loja_virtual/lib/models/address.dart';
 
 class User {
 
@@ -19,6 +20,8 @@ class User {
 
   bool admin = false;
 
+  Address address;
+
   // Referenciando os dodos
   DocumentReference get firestoreRef =>
       Firestore.instance.document('users/$id');
@@ -27,15 +30,26 @@ class User {
   CollectionReference get cartReference => firestoreRef.collection('cart');
 
   // Salvando os dados do usuário
-  Future<void> saveData() async{
+  Future<void> saveData() async {
     await firestoreRef.setData(toMap());
   }
 
   // Recuperando os dados do usuário e transformando em um mapa
-  Map<String, dynamic> toMap(){
+  Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'email':email,
+      'email': email,
+      // Verificando seu o endereço é diferente de nulo
+      if (address != null)
+        'address': address.toMap(),
     };
+  }
+
+  // Setando o endereço para usar em outras partes app
+  void setAddress(Address address) {
+    this.address = address;
+
+    // Salvando no banco de dados
+    saveData();
   }
 }

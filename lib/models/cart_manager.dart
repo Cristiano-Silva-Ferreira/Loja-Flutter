@@ -22,6 +22,16 @@ class CartManager extends ChangeNotifier {
   // Calculando o valor total da venda
   num get totalPrice => productsPrice + (deliveryPrince ?? 0);
 
+  //Função para informa que os dados estão sendo carregados
+  bool _loading = false;
+
+  bool get loading => _loading;
+
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   final Firestore firestore = Firestore.instance;
 
   // Atualizando o usuário logado
@@ -123,6 +133,8 @@ class CartManager extends ChangeNotifier {
   // ADDRESS
   // Recebendo os dados do serviço de endereço
   Future<void> getAddress(String cep) async {
+    loading = true;
+
     final cepAbertoService = CepAbertoService();
 
     // Obtendo o endereço atraves do serviço
@@ -141,22 +153,28 @@ class CartManager extends ChangeNotifier {
             state: cepAbertoAddress.estado.sigla,
             lat: cepAbertoAddress.latitude,
             long: cepAbertoAddress.longitude);
-        notifyListeners();
       }
+      loading = false;
     } catch (e) {
-      debugPrint(e.toString());
+      loading = false;
+      return Future.error('CEP inválido');
     }
+
   }
 
   // Função para set o endereço para calcular o frete
   Future<void> setAddress(Address address) async {
+    loading = true;
+
     // Salvando o endereço atualizado
     this.address = address;
 
     if (await calculateDelivery(address.lat, address.long)) {
-      print('price $deliveryPrince');
-      notifyListeners();
+      // Acessando o usuário para salvar o endereço
+      user.setAddress(address);
+      loading = false;
     } else {
+      loading = false;
       return Future.error('Endereço fora do raio de entrega :(');
     }
   }

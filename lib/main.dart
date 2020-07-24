@@ -5,7 +5,6 @@ import 'package:lojavirtual/models/home_manager.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';
 import 'package:lojavirtual/models/user_manager.dart';
-import 'package:lojavirtual/screens/address/address_screen.dart';
 import 'package:lojavirtual/screens/base/base_screen.dart';
 import 'package:lojavirtual/screens/cart/cart_sreen.dart';
 import 'package:lojavirtual/screens/edit_product/edit_prodcut_screen.dart';
@@ -15,12 +14,13 @@ import 'package:lojavirtual/screens/select_product/select_product_screen.dart';
 import 'package:lojavirtual/screens/signup/signup_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'screens/address/address_screen.dart';
+
 void main() async {
-    runApp(MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     // Tela USUÁRIO

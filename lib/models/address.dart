@@ -23,4 +23,18 @@ class Address {
 
   double lat;
   double long;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'street': street,
+      'number': number,
+      'complement': complement,
+      'district': district,
+      'zipCode': zipCode,
+      'city': city,
+      'state': state,
+      'lat': lat,
+      'long': long,
+    };
+  }
 }
