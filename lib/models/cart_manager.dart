@@ -37,24 +37,38 @@ class CartManager extends ChangeNotifier {
   // Atualizando o usuário logado
   void updateUser(UserManeger userManeger) {
     user = userManeger.user;
+    productsPrice = 0.0;
     items.clear();
+    removeAddress();
 
     // Verificando se o usuário é diferente de nulo
     if (user != null) {
+      // Carregando os itens do carrinho
       _loadCartItems();
+
+      // Carregando o usuário logado e os dados do seu endereço
+      _loadUserAddress();
     }
   }
 
   // Carregando as informações do carrinho do usuário logado
-  Future<void>_loadCartItems() async {
+  Future<void> _loadCartItems() async {
     final QuerySnapshot cartSnap = await user.cartReference.getDocuments();
 
     // Pegando os documentos
-    items = cartSnap.documents.map(
-            (d) =>
-        CartProduct.fromDocument(d)
-          ..addListener(_onItemUpdated)
-    ).toList();
+    items = cartSnap.documents
+        .map((d) => CartProduct.fromDocument(d)..addListener(_onItemUpdated))
+        .toList();
+  }
+
+  // Metódo para carregar os dados do endereço para calcular frete
+  Future<void> _loadUserAddress() async {
+    // Verificando se o endereço do usuário é diferente de nulo
+    if (user.address != null &&
+        await calculateDelivery(user.address.lat, user.address.long)) {
+      address = user.address;
+      notifyListeners();
+    }
   }
 
   // Adicionando produto ao carrinho
