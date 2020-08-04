@@ -5,6 +5,8 @@ import 'package:lojavirtual/models/checkout_manager.dart';
 import 'package:provider/provider.dart';
 
 class CheckoutScreen extends StatelessWidget {
+  final GlobalKey<ScaffoldState> scaffoldkey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProxyProvider<CartManager, CheckoutManager>(
@@ -15,6 +17,7 @@ class CheckoutScreen extends StatelessWidget {
           checkoutManager..updateCart(cartManager),
       lazy: false,
       child: Scaffold(
+          key: scaffoldkey,
           appBar: AppBar(
             title: const Text('Pagamento'),
             centerTitle: true,
@@ -29,7 +32,12 @@ class CheckoutScreen extends StatelessWidget {
                   PriceCard(
                     buttonText: 'Finalizar Pedido',
                     onPressed: () {
-                      checkoutManager.checkout();
+                      checkoutManager.checkout(
+                          onStockFail: (e) {
+                            Navigator.of(context).popUntil(
+                                    (route) => route.settings.name == '/cart');
+                          }
+                      );
                     },
                   )
                 ],

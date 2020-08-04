@@ -26,6 +26,7 @@ class CartTile extends StatelessWidget {
                 width: 80,
                 child: Image.network(cartProduct.product.images.first),
               ),
+
               // Exibindo o campo de conteúdo
               Expanded(
                 child: Padding(
@@ -45,6 +46,7 @@ class CartTile extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.w300),
                         ),
                       ),
+
                       Consumer<CartProduct>(
                         builder: (_, cartProduct, __) {
                           if (cartProduct.hasStock) {
@@ -68,6 +70,7 @@ class CartTile extends StatelessWidget {
                   ),
                 ),
               ),
+
               Consumer<CartProduct>(
                 builder: (_, cartProduct, __) {
                   return Column(
@@ -77,10 +80,12 @@ class CartTile extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                         onTap: cartProduct.increment,
                       ),
+
                       Text(
                         '${cartProduct.quantity}',
                         style: const TextStyle(fontSize: 20),
                       ),
+
                       CustomIconButton(
                         iconData: Icons.remove,
                         color: cartProduct.quantity > 1
