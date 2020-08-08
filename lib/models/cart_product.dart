@@ -33,9 +33,7 @@ class CartProduct extends ChangeNotifier {
   String size;
 
   Product _product;
-
   Product get product => _product;
-
   set product(Product value) {
     _product = value;
     notifyListeners();
