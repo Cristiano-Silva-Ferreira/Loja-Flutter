@@ -41,7 +41,7 @@ class AdminUserManager extends ChangeNotifier {
     // CASO QUEIRA VER A ATUALIZAÇÃO EM TEMPO REAL DOS USUÁRIOS NOVOS
     _subscription =
         firestore.collection('users').snapshots().listen((snapshot) {
-      users = snapshot.documents.map((e) => User.fromDocument(e)).toList();
+      users = snapshot.documents.map((d) => User.fromDocument(d)).toList();
     });
     // Ordenando os usuário por ordem alfabetica
     users.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));

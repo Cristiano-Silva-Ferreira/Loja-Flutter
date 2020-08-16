@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
+import 'package:lojavirtual/models/order.dart';
 import 'package:lojavirtual/models/product.dart';
 
 class CheckoutManager extends ChangeNotifier {
@@ -20,10 +21,20 @@ class CheckoutManager extends ChangeNotifier {
       await _decrementStock();
     } catch (e) {
       onStockFail(e);
-      debugPrint(e.toString());
+      return;
     }
 
-    _getOrderId().then((value) => print(value));
+    // TODO: PROCESSAR PAGAMENTO
+
+    // Obtendo o número do pagamento
+    final orderId = await _getOrderId();
+
+    // Declarando o objeto do pedido
+    final order = Order.fromCartManager(cartManager);
+    // Salvando o order no orderId
+    order.orderId = orderId.toString();
+
+    await order.save();
   }
 
   // Função para controlar a order dos pedidos dos produtos gerando seus IDs
@@ -79,7 +90,7 @@ class CheckoutManager extends ChangeNotifier {
           final doc = await tx
               .get(firestore.document('products/${cartProduct.productId}'));
           // Transformondo os dados obtidos em um objeto do tipo produto
-          final product = Product.fromDocument(doc);
+          product = Product.fromDocument(doc);
         }
 
         // Setando o produto mais atualizado para verificar caso achar problema em algum pedido
