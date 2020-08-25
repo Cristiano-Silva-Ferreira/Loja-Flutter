@@ -102,6 +102,17 @@ class CartManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Função para limpar o carrinho
+  void clear() {
+    // Percorrendo cada um dos carrinhos
+    for (final cartProduct in items) {
+      user.cartReference.document(cartProduct.id).delete();
+    }
+    // Apagando a lista local
+    items.clear();
+    notifyListeners();
+  }
+
   // Atualizando a quantidade dos itens no FireBase
   void _onItemUpdated() {
     productsPrice = 0.0;

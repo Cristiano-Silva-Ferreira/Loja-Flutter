@@ -20,7 +20,7 @@ class Order {
       'items': items.map((e) => e.toOrderItemMap()).toList(),
       'price': price,
       'user': userId,
-      'address': address.toString(),
+      'address': address.toMap(),
     });
   }
 
