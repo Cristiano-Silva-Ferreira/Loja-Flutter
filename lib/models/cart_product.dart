@@ -23,6 +23,17 @@ class CartProduct extends ChangeNotifier {
     });
   }
 
+  CartProduct.fromMap(Map<String, dynamic> map) {
+    productId = map['pid'] as String;
+    quantity = map['quantity'] as int;
+    size = map['size'] as String;
+    fixedPrice = map['fixedPrice'] as num;
+
+    firestore.document('products/$productId').get().then((doc) {
+      product = Product.fromDocument(doc);
+    });
+  }
+
   // Acessando o FireStore
   final Firestore firestore = Firestore.instance;
 
@@ -32,8 +43,12 @@ class CartProduct extends ChangeNotifier {
   int quantity;
   String size;
 
+  num fixedPrice;
+
   Product _product;
+
   Product get product => _product;
+
   set product(Product value) {
     _product = value;
     notifyListeners();
@@ -54,6 +69,7 @@ class CartProduct extends ChangeNotifier {
   // Preço total
   num get totalPrice => unitPrice * quantity;
 
+  // O mapa do carrinho de itens
   Map<String, dynamic> toCartItemMap() {
     return {
       'pid': productId,
@@ -62,11 +78,13 @@ class CartProduct extends ChangeNotifier {
     };
   }
 
+  // O mapa da ordem de pedido
   Map<String, dynamic> toOrderItemMap() {
     return {
       'pid': productId,
       'quantity': quantity,
       'size': size,
+      'fixedPrice': fixedPrice ?? unitPrice,
     };
   }
 

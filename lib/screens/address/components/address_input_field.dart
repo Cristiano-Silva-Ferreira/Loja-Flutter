@@ -177,8 +177,8 @@ class AddressInputField extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.only(bottom: 16),
         child:
-            Text('${address.street}, ${address.number}\n${address.district}\n'
-                '${address.city} - ${address.state}'),
+        Text('${address.street}, ${address.number}\n${address.district}\n'
+            '${address.city} - ${address.state}'),
       );
     } else {
       return Container();
