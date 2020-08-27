@@ -17,12 +17,12 @@ class CustomDrawerHeader extends StatelessWidget {
            mainAxisAlignment: MainAxisAlignment.spaceAround,
            children: <Widget>[
              Text(
-               'Loja do\nCristiano',
-               style: TextStyle(
-                 fontSize: 34,
-                 fontWeight: FontWeight.bold,
-               ),
-             ),
+               'Lock\nda Vez',
+                style: TextStyle(
+                  fontSize: 34,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             // Verificando se o usuário esta logado
              Text(
                'Ola, ${userManger.user?.name ?? ''}',

@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
                 //elevation: 0,
                 backgroundColor: Colors.transparent,
                 flexibleSpace: const FlexibleSpaceBar(
-                  title: Text('Loja do Cristiano'),
+                  title: Text('Lock da Vez'),
                   centerTitle: true,
                 ),
 

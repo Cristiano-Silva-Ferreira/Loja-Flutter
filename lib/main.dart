@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lojavirtual/models/admin_user_manager.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/home_manager.dart';
+import 'package:lojavirtual/models/order.dart';
 import 'package:lojavirtual/models/order_manager.dart';
 import 'package:lojavirtual/models/product.dart';
 import 'package:lojavirtual/models/product_manager.dart';
@@ -9,13 +10,13 @@ import 'package:lojavirtual/models/user_manager.dart';
 import 'package:lojavirtual/screens/base/base_screen.dart';
 import 'package:lojavirtual/screens/cart/cart_sreen.dart';
 import 'package:lojavirtual/screens/checkout/checkout_screen.dart';
+import 'package:lojavirtual/screens/confirmation/confirmation_screen.dart';
 import 'package:lojavirtual/screens/edit_product/edit_prodcut_screen.dart';
 import 'package:lojavirtual/screens/login/login_screen.dart';
 import 'package:lojavirtual/screens/product/product_screen.dart';
 import 'package:lojavirtual/screens/select_product/select_product_screen.dart';
 import 'package:lojavirtual/screens/signup/signup_screen.dart';
 import 'package:provider/provider.dart';
-
 import 'screens/address/address_screen.dart';
 
 void main() async {
@@ -70,18 +71,16 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-          title: 'Loja do Cristiano',
-          // Retirando o icone do debug
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-
+        title: 'Lock da Vez',
+        // Retirando o icone do debug
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
           // Definindo uma cor primária
           primaryColor: const Color.fromARGB(255, 4, 125, 141),
           // Definindo a cor do background
           scaffoldBackgroundColor: const Color.fromARGB(255, 4, 125, 141),
           // Retirando a elevação da AppBar
-          appBarTheme: const AppBarTheme(
-            elevation: 0
+          appBarTheme: const AppBarTheme(elevation: 0
           ),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
@@ -120,6 +119,12 @@ class MyApp extends StatelessWidget {
 
             case '/select_product':
               return MaterialPageRoute(builder: (_) => SelectProdutScreen());
+
+            case '/confirmation':
+              return MaterialPageRoute(builder: (_) =>
+                  ConfirmationScreen(
+                      settings.arguments as Order
+                  ));
 
             case '/base':
             default:

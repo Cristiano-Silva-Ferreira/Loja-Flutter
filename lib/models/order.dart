@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:lojavirtual/models/address.dart';
 import 'package:lojavirtual/models/cart_manager.dart';
 import 'package:lojavirtual/models/cart_product.dart';
@@ -47,6 +48,8 @@ class Order {
   Address address;
 
   Timestamp date;
+
+  String get formattedId => '#${orderId.padLeft(6, '0')}';
 
   @override
   String toString() {
